@@ -2,20 +2,20 @@
 
 <h2>New Books</h2>
 <!-- form_with部分 -->
-<%= form_with model: @book, url:'/books', method: :post do |f| %>
+<%= form_with model: @book, url:'/books', method: :post do |b| %>
 <div>
   <label>Title</label>
   <div>
-    <%= f.text_field :title %>
+    <%= b.text_field :title %>
   </div>
 </div>
 <div>
   <label>Body</label>
   <div>
-    <%= f.text_area :body %>
+    <%= b.text_area :body %>
   </div>
 </div>
 <div>
-  <%= f.submit 'Create book' %>
+  <%= b.submit 'Create book' %>
 </div>
 <% end %>
