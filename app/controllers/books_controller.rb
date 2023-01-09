@@ -31,21 +31,21 @@ class BooksController < ApplicationController
 
   def show
 
-    # booksテーブルのidをキーにして、select。
+    # booksテーブルのidをキーにして、select。（1件取得）。
     @book = book_find
 
   end
 
   def edit
 
-    # booksテーブルのidをキーにして、select。
+    # booksテーブルのidをキーにして、select。（1件取得）。
     @book = book_find
 
   end
 
   def update
 
-    # booksテーブルのidをキーにして、select。
+    # booksテーブルのidをキーにして、select。（1件取得）。
     book = Book.find(params[:id])
     # 編集画面の入力内容を更新する。
     book.update(book_param_update)
@@ -54,9 +54,20 @@ class BooksController < ApplicationController
     # 詳細画面へリダイレクト
     redirect_book_path(book.id)
 
-
   end
 
+  def destroy
+
+    # booksテーブルのidをキーにして、select。（1件取得）。
+    book = book_find
+    # 取得したデータを削除
+    book.destroy
+    # フラッシュメッセージを定義
+    notice('Book was successfully destroyed.')
+    # 詳細画面へリダイレクト
+    redirect_to '/books'
+
+  end
 
   private
 
@@ -94,7 +105,7 @@ class BooksController < ApplicationController
 
     end
 
-    # booksテーブルのidをキーにして、select。
+    # booksテーブルのidをキーにして、select。（1件取得）。
     def book_find
 
       Book.find(params[:id])
