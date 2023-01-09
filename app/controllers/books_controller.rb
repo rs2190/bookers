@@ -24,7 +24,8 @@ class BooksController < ApplicationController
   def index
 
     # allメソッドで、booksテーブルに保存されてる全データを取得
-    @books = Book.all
+    # booksテーブルのidで昇順
+    @books = Book.all.order(id: "ASC")
 
   end
 
