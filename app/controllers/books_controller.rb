@@ -15,9 +15,9 @@ class BooksController < ApplicationController
     # データをデータベースに保存するためのsaveメソッド実行
     @book.save
     # フラッシュメッセージを定義
-    flash[:notice] = 'Book was successfully created.'
+    notice
     # 詳細画面へリダイレクト
-    redirect_to book_path(@book.id);
+    redirect_book_path(@book.id)
 
   end
 
@@ -31,11 +31,30 @@ class BooksController < ApplicationController
 
   def show
 
-    @book = Book.find(params[:id])
+    # booksテーブルのidをキーにして、select。
+    @book = book_find
 
   end
 
   def edit
+
+    # booksテーブルのidをキーにして、select。
+    @book = book_find
+
+  end
+
+  def update
+
+    # booksテーブルのidをキーにして、select。
+    book = Book.find(params[:id])
+    # 編集画面の入力内容を更新する。
+    book.update(book_param_update)
+    # フラッシュメッセージを定義
+    notice
+    # 詳細画面へリダイレクト
+    redirect_book_path(book.id)
+
+
   end
 
 
@@ -60,5 +79,34 @@ class BooksController < ApplicationController
       params.permit(:title,:body)
 
     end
+
+    # ストロングパラメータ_更新用
+    def book_param_update
+
+      params.require(:book).permit(:title,:body)
+
+    end
+
+    # フラッシュメッセージを定義
+    def notice
+
+      flash[:notice] = 'Book was successfully created.'
+
+    end
+
+    # booksテーブルのidをキーにして、select。
+    def book_find
+
+      Book.find(params[:id])
+
+    end
+
+    # 詳細画面へリダイレクト。
+    def redirect_book_path(id)
+
+      redirect_to book_path(id)
+
+    end
+
 
 end

@@ -12,9 +12,9 @@
     <tr>
       <td><%= book.title %></td>
       <td><%= book.body %></td>
-      <td><%= link_to "Show", book_path(book.id) %></td>
-      <td><%= link_to "Edit", edit_book_path(book.id) %></td>
-      <td><%= link_to "Destroy", book_path(book.id), method: :delete, "data-confirm" => "Are you sure?" %></td>
+      <td><%= link_to 'Show', book_path(book.id) %></td>
+      <td><%= link_to 'Edit', edit_book_path(book.id) %></td>
+      <td><%= link_to 'Destroy', book_path(book.id), method: :delete, "data-confirm" => "Are you sure?" %></td>
     </tr>
     <% end %>
   </tbody>
@@ -23,19 +23,19 @@
 <h2>New Books</h2>
 <!-- form_with部分 -->
 <%= form_with model: @book, url:'/books', method: :post do |b| %>
-<div>
-  <label>Title</label>
+<div class="field">
+  <label for="book_title">Title</label>
   <div>
     <%= b.text_field :title %>
   </div>
 </div>
-<div>
-  <label>Body</label>
+<div class="field">
+  <label for = "book_body">Body</label>
   <div>
     <%= b.text_area :body %>
   </div>
 </div>
-<div>
-  <%= b.submit 'Create book' %>
+<div class="actions">
+  <%= b.submit 'Create Book' %>
 </div>
 <% end %>
