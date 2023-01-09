@@ -15,7 +15,7 @@ class BooksController < ApplicationController
     # データをデータベースに保存するためのsaveメソッド実行
     @book.save
     # フラッシュメッセージを定義
-    notice
+    notice('Book was successfully created.')
     # 詳細画面へリダイレクト
     redirect_book_path(@book.id)
 
@@ -50,7 +50,7 @@ class BooksController < ApplicationController
     # 編集画面の入力内容を更新する。
     book.update(book_param_update)
     # フラッシュメッセージを定義
-    notice
+    notice('Book was successfully updated.')
     # 詳細画面へリダイレクト
     redirect_book_path(book.id)
 
@@ -88,9 +88,9 @@ class BooksController < ApplicationController
     end
 
     # フラッシュメッセージを定義
-    def notice
+    def notice(word)
 
-      flash[:notice] = 'Book was successfully created.'
+      flash[:notice] = word
 
     end
 
