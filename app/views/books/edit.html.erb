@@ -1,4 +1,14 @@
 <h1>Editing Book</h1>
+<% if @book.errors.any? %>
+ <div id="error_explanation">
+   <h2><%= @book.errors.count %>errors prohibited this book from being saved:</h2>
+   <ui>
+     <% @book.errors.full_messages.each do |message| %>
+     <li><%= message %></li>
+     <% end %>
+   </ui>
+  </div>
+<% end %>
 
 <%= form_with model: @book do |b| %>
  <div class="field">

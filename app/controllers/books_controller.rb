@@ -1,23 +1,24 @@
 class BooksController < ApplicationController
-  def new
-
-    # インスタンス変数 [@]
-    # コントローラーとViewでデータの受け渡しができる
-    # Viewへ渡すためのインスタンス変数に空のModelオブジェクトを生成する。
-    @book = Book.new
-
-  end
 
   def create
 
     # データを受け取り新規登録するためのインスタンス作成
     @book = Book.new(book_param)
+
     # データをデータベースに保存するためのsaveメソッド実行
-    @book.save
-    # フラッシュメッセージを定義
-    notice('Book was successfully created.')
-    # 詳細画面へリダイレクト
-    redirect_book_path(@book.id)
+    if @book.save
+
+     # フラッシュメッセージを定義
+     notice('Book was successfully created.')
+     # 詳細画面へリダイレクト
+     redirect_book_path(@book.id)
+
+    else
+
+      @books = book_all
+      render :index
+
+    end
 
   end
 
@@ -25,7 +26,8 @@ class BooksController < ApplicationController
 
     # allメソッドで、booksテーブルに保存されてる全データを取得
     # booksテーブルのidで昇順
-    @books = Book.all.order(id: "ASC")
+    @book = Book.new
+    @books = book_all
 
   end
 
@@ -46,13 +48,18 @@ class BooksController < ApplicationController
   def update
 
     # booksテーブルのidをキーにして、select。（1件取得）。
-    book = Book.find(params[:id])
+    @book = Book.find(params[:id])
     # 編集画面の入力内容を更新する。
-    book.update(book_param_update)
-    # フラッシュメッセージを定義
-    notice('Book was successfully updated.')
-    # 詳細画面へリダイレクト
-    redirect_book_path(book.id)
+    if @book.update(book_param)
+      # フラッシュメッセージを定義
+      notice('Book was successfully updated.')
+      # 詳細画面へリダイレクト
+      redirect_book_path(@book.id)
+    else
+
+       render :edit
+
+    end
 
   end
 
@@ -82,19 +89,7 @@ class BooksController < ApplicationController
       #
       # permit
       # requireで絞り込んだデータの中から、保存を許可するカラムを指定します
-
-      # params.require(:book).permit(:title,:body)
-      # ⇒param is missing or the value is empty: が発生。
-      # ⇒require(:book)を削除したら出来た。
-      # (https://qiita.com/Takka_Log/items/32dae78d7e3892e7b051)
-      params.permit(:title,:body)
-
-    end
-
-    # ストロングパラメータ_更新用
-    def book_param_update
-
-      params.require(:book).permit(:title,:body)
+       params.require(:book).permit(:title,:body)
 
     end
 
@@ -116,6 +111,15 @@ class BooksController < ApplicationController
     def redirect_book_path(id)
 
       redirect_to book_path(id)
+
+    end
+
+    # allメソッドで、booksテーブルに保存されてる全データを取得
+    def book_all
+
+      # booksテーブルのidで昇順
+      Book.all.order(id: "ASC")
+
 
     end
 
