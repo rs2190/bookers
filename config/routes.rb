@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  get 'homes/top'
+  # root to:  'コントローラ名#アクション名'
+  # rails立ち上げ時のアプリケーショントップ画面をルートパスに設定できる。
+  root to: 'homes#top'
 
   resources :books
 
