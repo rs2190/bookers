@@ -120,7 +120,6 @@ class BooksController < ApplicationController
       # booksテーブルのidで昇順
       Book.all.order(id: "ASC")
 
-
     end
 
 
