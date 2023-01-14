@@ -7,14 +7,15 @@ class BooksController < ApplicationController
 
     # データをデータベースに保存するためのsaveメソッド実行
     if @book.save
-
-     # フラッシュメッセージを定義
-     notice('Book was successfully created.')
-     # 詳細画面へリダイレクト
-     redirect_book_path(@book.id)
+      # バリデーションエラーが無い場合。
+      # フラッシュメッセージを定義
+      notice('Book was successfully created.')
+      # 詳細画面へリダイレクト
+      redirect_book_path(@book.id)
 
     else
-
+      # バリデーションエラー時、indexに遷移
+      # indexに必要なインスタンス変数（books）にコントローラーとViewでデータの受け渡しを行う。
       @books = book_all
       render :index
 
@@ -51,13 +52,16 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     # 編集画面の入力内容を更新する。
     if @book.update(book_param)
+
+      # バリデーションエラーが無い場合。
+
       # フラッシュメッセージを定義
       notice('Book was successfully updated.')
       # 詳細画面へリダイレクト
       redirect_book_path(@book.id)
     else
-
-       render :edit
+      # バリデーションエラー時、indexに遷移
+      render :edit
 
     end
 
@@ -97,8 +101,7 @@ class BooksController < ApplicationController
 
       # params.permit(:title,:body)
       # ⇒バリデーション実装時は不要。それまではこれで。
-
-       params.require(:book).permit(:title,:body)
+      params.require(:book).permit(:title,:body)
 
     end
 
