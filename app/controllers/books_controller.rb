@@ -89,6 +89,15 @@ class BooksController < ApplicationController
       #
       # permit
       # requireで絞り込んだデータの中から、保存を許可するカラムを指定します
+
+      # params.require(:book).permit(:title,:body)
+      # ⇒param is missing or the value is empty: が発生。
+      # ⇒require(:book)を削除したら出来た。
+      # (https://qiita.com/Takka_Log/items/32dae78d7e3892e7b051)
+
+      # params.permit(:title,:body)
+      # ⇒バリデーション実装時は不要。それまではこれで。
+
        params.require(:book).permit(:title,:body)
 
     end
